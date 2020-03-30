@@ -1,0 +1,54 @@
+
+
+リスト4.1 
+
+using System.Collections;  
+using System.Collections.Generic;  
+using UnityEngine;  
+
+public class Ball : MonoBehaviour  
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);  
+    public Vector3 V0 = new Vector3(0.0f, 0.0f, 0.0f);  
+    private Vector3 P = new Vector3();  
+    private Vector3 V = new Vector3();  
+    public float t = 0.0f;  
+    public float g = -9.80665f;  
+    public int A = 2;  
+    public int n = 0;  
+
+    // Use this for initialization  
+    void Start()  
+    {  
+        P = P0;　　　　　　　　　　　　//  位置を初期化  
+        V = V0;　　　　　　　　　　　　//  速度を初期化  
+        transform.position = P;　　  　　　//  球を初期位置へ移動  
+
+        Debug.Log("t =" + t);  
+        Debug.Log("V.y =" + V.y);  
+        Debug.Log("P.y =" + P.y);  
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);  
+        obj.transform.Translate(P.x, P.y, P.z);  
+    }  
+    // Update is called once per frame  
+    void FixedUpdate()  
+    {  
+        n = n + 1;  
+        t = t + 0.1f;  　　　　　　　
+        V.y = g * t + V0.y;                        //  y速度を算出  
+        P.y = 0.5f * g * t * t + V0.y * t + P0.y;　//  y位置を算出①  
+
+        transform.position = P;　　               // ①により球を移動  
+
+        Debug.Log("t =" + t);  
+        Debug.Log("V.y =" + V.y);  
+        Debug.Log("P.y =" + P.y);  
+
+        if (n % A == 0)  
+        {  
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);  
+            obj.transform.Translate(P.x, P.y, P.z);  
+        }  
+    }  
+}  
